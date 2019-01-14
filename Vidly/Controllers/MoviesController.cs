@@ -88,6 +88,7 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
             if (movie.Id == 0)
@@ -100,22 +101,13 @@ namespace Vidly.Controllers
                 var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
 
                 movieInDb.Name = movie.Name;
-                movieInDb.DateAdded = movie.DateAdded;
+                movieInDb.DateAdded = DateTime.Now;
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.NumberInStock = movie.NumberInStock;
                 movieInDb.GenreId = movie.GenreId;
             }
 
             _context.SaveChanges();
-
-            try
-            {
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
 
             return RedirectToAction("Index", "Movies");
         }
