@@ -24,7 +24,7 @@ else
 
 @using (Html.BeginForm("Save", "Movies"))
 {
-    @Html.ValidationSummary(true, "Please fix the following errors")
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
         @Html.TextBoxFor(m => m.Movie.Name, new { @class = "form-control" })
