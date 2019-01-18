@@ -26,8 +26,7 @@ namespace Vidly.Controllers
 
         public ActionResult Index()
         {
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
-            return View(movies);
+            return View();
         }
 
         public ActionResult Details(int id)
@@ -64,7 +63,7 @@ namespace Vidly.Controllers
 
         public ActionResult New()
         {
-            var viewModel = new MovieFormViewModel
+            var viewModel = new MovieFormViewModel()
             {
                 Genres = _context.Genres.ToList()
             };
@@ -73,14 +72,13 @@ namespace Vidly.Controllers
 
         public ActionResult Edit(int id)
         {
-            var movies = _context.Movies.Single(m => m.Id == id);
+            var movie = _context.Movies.Single(m => m.Id == id);
 
-            if (movies == null)
+            if (movie == null)
                 return HttpNotFound();
 
-            var viewModel = new MovieFormViewModel
+            var viewModel = new MovieFormViewModel(movie)
             {
-                Movie = movies,
                 Genres = _context.Genres.ToList()
             };
 
@@ -93,12 +91,11 @@ namespace Vidly.Controllers
         {
             if (!ModelState.IsValid) 
             {
-                var viewModel = new MovieFormViewModel
+                var viewModel = new MovieFormViewModel(movie)
                 {
-                    Movie = movie,
                     Genres = _context.Genres.ToList()
                 };
-                return View("MovieForm");
+                return View("MovieForm", viewModel);
             }
 
             if (movie.Id == 0)
@@ -108,7 +105,7 @@ namespace Vidly.Controllers
             }
             else
             {
-                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                Movie movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
 
                 movieInDb.Name = movie.Name;
                 movieInDb.DateAdded = DateTime.Now;

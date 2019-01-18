@@ -26,9 +26,7 @@ namespace Vidly.Controllers
 
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            return View(customers);
+            return View();
         }
 
         public ActionResult Details(int id)
@@ -74,6 +72,7 @@ namespace Vidly.Controllers
             else
             {
                 Customer customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+
                 customerInDb.Name = customer.Name;
                 customerInDb.Birthdate = customer.Birthdate;
                 customerInDb.MembershipTypeId = customer.MembershipTypeId;
