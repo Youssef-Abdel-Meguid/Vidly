@@ -54,7 +54,7 @@ namespace Vidly
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
+            //app.UseFacebookAuthentication( /*use you appId & appSecret to allow FB login*/
             //  appId: "",
             //   appSecret: "");
 
